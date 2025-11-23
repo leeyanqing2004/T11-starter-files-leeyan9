@@ -99,6 +99,17 @@ export const AuthProvider = ({ children }) => {
             
             localStorage.setItem("token", token);
 
+            
+            const userResponse = await fetch(`${BACKEND_URL}/user/me`, {
+                method: "GET",
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            const userData = await userResponse.json();
+
+            
+            setUser(userData.user);
+
             navigate("/profile");
             return null;
         } catch (err) {
